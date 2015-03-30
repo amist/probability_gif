@@ -1,21 +1,18 @@
 from images2gif import writeGif
 from PIL import Image, ImageDraw, ImageColor
 from random import randint
+from copy import copy
 import os
 
-#pics_dir = os.path.join(os.getcwd(), 'pics')
+frames_number = 2
+
 pics_dir = 'pics'
-file_names = sorted((os.path.join(pics_dir, fn) for fn in os.listdir(pics_dir) if fn.endswith('.jpg')))
-#print file_names
+file_name = 'original-firefox-logo.jpg'
+orig_im = Image.open(os.path.join(pics_dir, file_name))
 
-images = [Image.open(fn) for fn in file_names]
-#print images
-
-#size = (150,150)
-#for im in images:
-#    im.thumbnail(size, Image.ANTIALIAS)
-
-for im in images:
+images = []
+for i in range(frames_number):
+    im = copy(orig_im)
     draw = ImageDraw.Draw(im)
     (width, height) = im.size
     for i in range(width):
@@ -28,6 +25,7 @@ for im in images:
                 else:
                     color_str += '00'
             draw.point((i, j), ImageColor.getcolor(color_str, 'RGB'))
+    images.append(im)
             
     #draw = ImageDraw.Draw(im)
     #r, g, b = im.getpixel((10, 10))
@@ -36,6 +34,8 @@ for im in images:
     #r, g, b = im.getpixel((10, 10))
     #print r, g, b
     
-    
-filename = "gif.gif"
-writeGif(filename, images, duration=0.2)
+images[0].save("pic.jpeg", "JPEG")
+
+if frames_number > 1:
+    filename = "gif.gif"
+    writeGif(filename, images, duration=0.01)
