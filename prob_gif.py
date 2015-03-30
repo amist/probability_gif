@@ -4,10 +4,11 @@ from random import randint
 from copy import copy
 import os
 
-frames_number = 2
+frames_number = 1
 
 pics_dir = 'pics'
 file_name = 'original-firefox-logo.jpg'
+file_name = 'Landscape-1.jpeg'
 orig_im = Image.open(os.path.join(pics_dir, file_name))
 
 images = []
@@ -34,7 +35,7 @@ for i in range(frames_number):
     #r, g, b = im.getpixel((10, 10))
     #print r, g, b
     
-images[0].save("pic.jpeg", "JPEG")
+images[0].save("pic.png", "PNG")
 
 if frames_number > 1:
     filename = "gif.gif"
